@@ -31,12 +31,15 @@ const upload = multer({ storage });
 // Serve the "uploads" folder as static
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.get("/", (req, res) => {
+  res.status(200).send("Hello World!!");
+})
+
 // Define the upload endpoint
 app.post("/upload", upload.single("upload"), (req, res) => {
-  console.log('req: ', req);
   try {
     // Return the URL of the uploaded file
-    const fileUrl = `http://localhost:${PORT}/uploads/${req.file.filename}`;
+    const fileUrl = `https://vercel-81e8fhlya-amits-projects-61e6ca4e.vercel.app/:${PORT}/uploads/${req.file.filename}`;
     res.status(200).json({ url: fileUrl });
   } catch (err) {
     res.status(500).json({ error: "Failed to upload image" });
